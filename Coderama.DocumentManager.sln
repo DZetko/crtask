@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coderama.DocumentManager", "Coderama.DocumentManager\Coderama.DocumentManager.csproj", "{3E8BEB5E-179E-456E-A201-576E25BCF805}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coderama.DocumentManager.Domain", "Coderama.DocumentManager.Domain\Coderama.DocumentManager.Domain.csproj", "{1933952F-4404-4CE7-BB61-C8BE24084EFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coderama.DocumentManager.Presentation", "Coderama.DocumentManager.Presentation\Coderama.DocumentManager.Presentation.csproj", "{A99EFE90-EAC6-4E30-AEE5-D70AFB57BD66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coderama.DocumentManager.Infrastructure", "Coderama.DocumentManager.Infrastructure\Coderama.DocumentManager.Infrastructure.csproj", "{FAB0CA23-11A6-4FA4-9D63-D6FDB2910E49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coderama.DocumentManager.Application", "Coderama.DocumentManager.Application\Coderama.DocumentManager.Application.csproj", "{FA8C70E9-3143-4C35-BDF7-2F8465E61ECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coderama.DocumentManager.Persistence", "Coderama.DocumentManager.Persistence\Coderama.DocumentManager.Persistence.csproj", "{36AF0F50-AB88-435D-9579-7B88B8C8FDA2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E8BEB5E-179E-456E-A201-576E25BCF805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8BEB5E-179E-456E-A201-576E25BCF805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8BEB5E-179E-456E-A201-576E25BCF805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E8BEB5E-179E-456E-A201-576E25BCF805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1933952F-4404-4CE7-BB61-C8BE24084EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1933952F-4404-4CE7-BB61-C8BE24084EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1933952F-4404-4CE7-BB61-C8BE24084EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1933952F-4404-4CE7-BB61-C8BE24084EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A99EFE90-EAC6-4E30-AEE5-D70AFB57BD66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99EFE90-EAC6-4E30-AEE5-D70AFB57BD66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A99EFE90-EAC6-4E30-AEE5-D70AFB57BD66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A99EFE90-EAC6-4E30-AEE5-D70AFB57BD66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB0CA23-11A6-4FA4-9D63-D6FDB2910E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB0CA23-11A6-4FA4-9D63-D6FDB2910E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB0CA23-11A6-4FA4-9D63-D6FDB2910E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB0CA23-11A6-4FA4-9D63-D6FDB2910E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8C70E9-3143-4C35-BDF7-2F8465E61ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8C70E9-3143-4C35-BDF7-2F8465E61ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8C70E9-3143-4C35-BDF7-2F8465E61ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8C70E9-3143-4C35-BDF7-2F8465E61ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36AF0F50-AB88-435D-9579-7B88B8C8FDA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36AF0F50-AB88-435D-9579-7B88B8C8FDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36AF0F50-AB88-435D-9579-7B88B8C8FDA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36AF0F50-AB88-435D-9579-7B88B8C8FDA2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
