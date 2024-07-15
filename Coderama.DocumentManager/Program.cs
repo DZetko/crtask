@@ -13,8 +13,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 
-// Map controllers defined outside of application
-builder.Services.AddControllers().AddApplicationPart(typeof(Coderama.DocumentManager.Presentation.Controller.DocumentController).Assembly);
+builder.Services.AddControllers()
+    // Add more formatters below to support more response formats
+    .AddXmlDataContractSerializerFormatters()
+    // Map controllers defined outside of application
+    .AddApplicationPart(typeof(Coderama.DocumentManager.Presentation.Controller.DocumentController).Assembly);
 
 // MediatR is used to handle synchronous commands and queries in the system
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(Coderama.DocumentManager.Application.Command.UpdateCommand.UpdateDocumentCommand).Assembly));
