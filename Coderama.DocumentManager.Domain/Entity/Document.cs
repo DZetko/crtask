@@ -12,10 +12,6 @@ public class Document: IEquatable<Document>
         List<string> tags,
         dynamic data) : this()
     {
-        ArgumentNullException.ThrowIfNull(id);
-        ArgumentNullException.ThrowIfNull(tags);
-        ArgumentNullException.ThrowIfNull(data);
-
         Id = id;
         Tags = tags;
         Data = data;
@@ -23,6 +19,9 @@ public class Document: IEquatable<Document>
 
     public static Document Create(Guid id, List<string> tags, string data)
     {
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
+        ArgumentNullException.ThrowIfNull(tags, nameof(tags));
+        ArgumentNullException.ThrowIfNull(data, nameof(data));
         return new Document(id, tags, data);
     }
 

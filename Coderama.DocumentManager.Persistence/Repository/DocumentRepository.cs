@@ -9,19 +9,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Coderama.DocumentManager.Persistence.Repository;
 
-public sealed class DocumentRepository : IDocumentRepository
+public sealed class DocumentRepository(
+    IConfiguration configuration,
+    DocumentManagerDbContext dbContext,
+    ILogger<DocumentRepository> logger)
+    : IDocumentRepository
 {
-    private readonly IConfiguration _configuration;
-    private readonly DocumentManagerDbContext _dbContext;
-    private readonly ILogger<DocumentRepository> _logger;
-
-    public DocumentRepository(IConfiguration configuration, DocumentManagerDbContext dbContext, ILogger<DocumentRepository> logger)
-    {
-        _configuration = configuration;
-        _dbContext = dbContext;
-        _logger = logger;
-    }
-    
     public async Task<Document?> GetDocumentByIdASync(Guid id)
     {
         // Avoiding EF here to minimize the performance penalty of using an ORM
@@ -30,7 +23,7 @@ public sealed class DocumentRepository : IDocumentRepository
 
         try
         {
-            var connectionString = _configuration.GetConnectionString("DocumentManagerStore");
+            var connectionString = configuration.GetConnectionString("DocumentManagerStore");
             await using SqlConnection connection = new SqlConnection(connectionString);
             await connection.OpenAsync();
 
@@ -57,7 +50,7 @@ public sealed class DocumentRepository : IDocumentRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message, ex);
+            logger.LogError(ex.Message, ex);
         }
 
         return null;
@@ -66,16 +59,16 @@ public sealed class DocumentRepository : IDocumentRepository
     public async Task CreateDocumentAsync(
         Document document)
     {
-        await _dbContext.Documents.AddAsync(document);
+        await dbContext.Documents.AddAsync(document);
     }
 
     public async Task UpdateDocumentAsync(
         Document document)
     {
-        if (!_dbContext.Documents.Contains(document))
+        if (!dbContext.Documents.Contains(document))
         {
             throw new Exception($"Could not find a document with: {document.Id}");
         }
-        _dbContext.Documents.Update(document);
+        dbContext.Documents.Update(document);
     }
 }

@@ -4,13 +4,8 @@ using Document = Coderama.DocumentManager.Domain.Entity.Document;
 
 namespace Coderama.DocumentManager.Persistence;
 
-public class DocumentManagerDbContext: DbContext
+public class DocumentManagerDbContext(DbContextOptions options) : DbContext(options)
 {
-    public DocumentManagerDbContext(DbContextOptions options)
-        : base(options)
-    {
-    }
-
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {

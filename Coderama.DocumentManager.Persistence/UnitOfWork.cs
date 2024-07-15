@@ -2,17 +2,10 @@
 
 namespace Coderama.DocumentManager.Persistence;
 
-public sealed class UnitOfWork : IUnitOfWork
+public sealed class UnitOfWork(DocumentManagerDbContext dbContext) : IUnitOfWork
 {
-    private readonly DocumentManagerDbContext _dbContext;
-
-    public UnitOfWork(DocumentManagerDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

@@ -9,21 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace Coderama.DocumentManager.Presentation.Controller;
 
 [Route("api/document")]
-public class DocumentController: ControllerBase
+public class DocumentController(ISender sender) : ControllerBase
 {
-    private readonly ISender _sender;
-
-    public DocumentController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpGet]
     [ProducesResponseType<Document>(StatusCodes.Status200OK)]
     public async Task<IActionResult> Get(GetDocumentDto getDocument)
     {
         var getDocumentByIdQuery = new GetDocumentByIdQuery(getDocument.Id);
-        var document = await _sender.Send(getDocumentByIdQuery);
+        var document = await sender.Send(getDocumentByIdQuery);
         return Ok(document);
     }
     
@@ -32,7 +25,7 @@ public class DocumentController: ControllerBase
     public async Task<IActionResult> Create(CreateDocumentDto createDocumentDto)
     {
         var createDocumentCommand = new CreateDocumentCommand(createDocumentDto.Id, createDocumentDto.Tags, createDocumentDto.Data);
-        await _sender.Send(createDocumentCommand);
+        await sender.Send(createDocumentCommand);
         return CreatedAtAction(nameof(Create), createDocumentCommand.Id);
     }
     
@@ -41,7 +34,7 @@ public class DocumentController: ControllerBase
     public async Task<IActionResult> Update(UpdateDocumentDto updateDocumentDto)
     {
         var updateDocumentCommand = new UpdateDocumentCommand(updateDocumentDto.Id, updateDocumentDto.Tags, updateDocumentDto.Data);
-        await _sender.Send(updateDocumentCommand);
+        await sender.Send(updateDocumentCommand);
         return NoContent();
     }
 }
