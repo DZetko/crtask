@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Coderama.DocumentManager.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using Document = Coderama.DocumentManager.Domain.Entity.Document;
 
@@ -10,11 +11,10 @@ public class DocumentManagerDbContext(DbContextOptions options) : DbContext(opti
         ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Document>()
-            .Property<List<string>>(e => e.Tags)
-            .HasConversion(
-                r => JsonSerializer.Serialize(r, JsonSerializerOptions.Default),
-                s => JsonSerializer.Deserialize<List<string>>(s, JsonSerializerOptions.Default) ?? new());
+            .HasMany(d => d.Tags)
+            .WithOne(d => d.Document);
     }
 
     public DbSet<Document> Documents { get; internal set; }
+    public DbSet<Tag> Tags { get; internal set; }
 }

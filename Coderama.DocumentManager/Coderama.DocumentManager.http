@@ -1,6 +1,6 @@
 @Coderama.DocumentManager_HostAddress = http://localhost:5281
 
-GET {{Coderama.DocumentManager_HostAddress}}/weatherforecast/
-Accept: application/json
+GET {{Coderama.DocumentManager_HostAddress}}/api/document?Id=a2320de8-e80a-4138-ac82-a0733135115a
+Accept: application/xml
 
 ###

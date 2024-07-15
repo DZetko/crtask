@@ -12,7 +12,7 @@ public class CreateDocumentCommandHandler(IUnitOfWork unitOfWork, IDocumentRepos
         CreateDocumentCommand request,
         CancellationToken cancellationToken)
     {
-        var document = Document.Create(request.Id, request.Tags, request.Data);
+        var document = Document.Create(request.Id, request.Tags.Select(Tag.Create).ToList() ,request.Data);
         await repository.CreateDocumentAsync(document);
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

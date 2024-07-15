@@ -1,9 +1,7 @@
 ﻿using System.Data;
-using System.Text.Json;
 using Coderama.DocumentManager.Domain;
 using Coderama.DocumentManager.Domain.Entity;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -20,32 +18,37 @@ public sealed class DocumentRepository(
         // Avoiding EF here to minimize the performance penalty of using an ORM
         // It must be evaluated, though, if the performance gains outweigh the lack of strong typing of the below
         // the below plain SQL query and also the proneness to error if the persistence or DB models change
-
         try
         {
             var connectionString = configuration.GetConnectionString("DocumentManagerStore");
             await using SqlConnection connection = new SqlConnection(connectionString);
             await connection.OpenAsync();
 
-            await using var getDocumentByIdCommand = new SqlCommand
+            await using var getTagsByDocumentIdCommand = new SqlCommand();
+            getTagsByDocumentIdCommand.CommandText = "SELECT Value FROM Tags WHERE DocumentId = @DocumentId";
+            getTagsByDocumentIdCommand.CommandType = CommandType.Text;
+            getTagsByDocumentIdCommand.Connection = connection;
+            getTagsByDocumentIdCommand.Parameters.Add("@DocumentId", SqlDbType.UniqueIdentifier).Value = id;
+            await using var tagsReader = await getTagsByDocumentIdCommand.ExecuteReaderAsync();
+            List<Tag> tags = [];
+            while (await tagsReader.ReadAsync())
             {
-                CommandText = "SELECT * FROM Documents WHERE id = @id",
-                CommandType = CommandType.Text,
-                Connection = connection
-            };
-            getDocumentByIdCommand.Parameters.Add("@id", SqlDbType.UniqueIdentifier).Value = id;
-            await using var reader = await getDocumentByIdCommand.ExecuteReaderAsync();
+                var value = tagsReader[0];
+                if (value == null) continue;
+                tags.Add(Tag.Create(value.ToString()));
+            }
 
-            if (await reader.ReadAsync())
+            await using var getDocumentByIdCommand = new SqlCommand();
+            getDocumentByIdCommand.CommandText = "SELECT * FROM Documents WHERE id = @id";
+            getDocumentByIdCommand.CommandType = CommandType.Text;
+            getDocumentByIdCommand.Connection = connection;
+            getDocumentByIdCommand.Parameters.Add("@id", SqlDbType.UniqueIdentifier).Value = id;
+            await using var documentsReader = await getDocumentByIdCommand.ExecuteReaderAsync();
+
+            if (await documentsReader.ReadAsync())
             {
-                var tags = reader[1];
-                var data = reader[2].ToString();
-                List<string> parsedTags = new();
-                if (tags != null)
-                {
-                    parsedTags = JsonSerializer.Deserialize<List<string>>(tags.ToString());
-                }
-                return Document.Create(id, parsedTags, data);
+                var data = documentsReader[1].ToString();
+                return Document.Create(id, tags, data);
             }
         }
         catch (Exception ex)
@@ -62,7 +65,7 @@ public sealed class DocumentRepository(
         await dbContext.Documents.AddAsync(document);
     }
 
-    public async Task UpdateDocumentAsync(
+    public Task UpdateDocumentAsync(
         Document document)
     {
         if (!dbContext.Documents.Contains(document))
@@ -70,5 +73,6 @@ public sealed class DocumentRepository(
             throw new Exception($"Could not find a document with: {document.Id}");
         }
         dbContext.Documents.Update(document);
+        return Task.CompletedTask;
     }
 }

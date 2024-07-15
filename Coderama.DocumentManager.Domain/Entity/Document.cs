@@ -1,36 +1,40 @@
-﻿namespace Coderama.DocumentManager.Domain.Entity;
+﻿using Coderama.DocumentManager.Domain.Primitives;
 
-public class Document: IEquatable<Document>
+namespace Coderama.DocumentManager.Domain.Entity;
+
+public class Document: BaseEntity, IEquatable<Document>
 {
-    public Guid Id { get; set; }
-    public List<string> Tags { get; set; }
-    public string Data { get; set; }
-    
+    private readonly List<Tag> tags = [];
     private Document(){}
     private Document(
         Guid id,
-        List<string> tags,
-        dynamic data) : this()
+        dynamic data) : base(id)
     {
-        Id = id;
-        Tags = tags;
         Data = data;
     }
-
-    public static Document Create(Guid id, List<string> tags, string data)
+    
+    public static Document Create(Guid id, List<Tag> tags, string data)
     {
         ArgumentNullException.ThrowIfNull(id, nameof(id));
         ArgumentNullException.ThrowIfNull(tags, nameof(tags));
         ArgumentNullException.ThrowIfNull(data, nameof(data));
-        return new Document(id, tags, data);
-    }
+        var document = new Document(id, data);
+        document.UpdateTags(tags);
 
-    public void Update(
-        List<string> tags,
+        return document;
+    }
+    
+    public void UpdateData(
         string data)
     {
-        Tags = tags;
         Data = data;
+    }
+    
+    public void UpdateTags(
+        ICollection<Tag> newTags)
+    {
+        tags.Clear();
+        tags.AddRange(newTags);
     }
 
     public bool Equals(
@@ -54,4 +58,7 @@ public class Document: IEquatable<Document>
     {
         return HashCode.Combine(Id, Tags, Data);
     }
+    
+    public IReadOnlyCollection<Tag> Tags => tags;
+    public string Data { get; set; }
 }

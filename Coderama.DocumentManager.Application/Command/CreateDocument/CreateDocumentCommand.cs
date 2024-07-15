@@ -1,5 +1,3 @@
-using Coderama.DocumentManager.Domain;
-using Coderama.DocumentManager.Domain.Entity;
 using MediatR;
 
 namespace Coderama.DocumentManager.Application.Command.CreateDocument;

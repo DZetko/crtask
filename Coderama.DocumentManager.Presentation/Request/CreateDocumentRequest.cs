@@ -1,6 +1,6 @@
 namespace Coderama.DocumentManager.Presentation;
 
-public class CreateDocumentDto
+public class CreateDocumentRequest
 {
     public Guid Id { get; init; }
     public List<string> Tags { get; init; }

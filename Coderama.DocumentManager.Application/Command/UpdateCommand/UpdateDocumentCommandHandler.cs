@@ -1,4 +1,5 @@
 using Coderama.DocumentManager.Domain;
+using Coderama.DocumentManager.Domain.Entity;
 using Coderama.DocumentManager.Domain.Repository;
 using MediatR;
 
@@ -17,7 +18,8 @@ public class UpdateDocumentCommandHandler(IUnitOfWork unitOfWork, IDocumentRepos
             throw new Exception($"No Document could be found with ID: {request.Id}");
         }
 
-        existingDocument.Update(request.Tags, request.Data);
+        existingDocument.UpdateData(request.Data);
+        existingDocument.UpdateTags(request.Tags.Select(Tag.Create).ToList());
         await repository.UpdateDocumentAsync(existingDocument);
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

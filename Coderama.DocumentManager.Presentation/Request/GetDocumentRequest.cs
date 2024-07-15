@@ -1,6 +1,6 @@
 namespace Coderama.DocumentManager.Presentation;
 
-public class GetDocumentDto
+public class GetDocumentRequest
 {
     public Guid Id { get; init; }
 }

@@ -19,7 +19,7 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Coderama.DocumentMan
 // MediatR is used to handle synchronous commands and queries in the system
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(Coderama.DocumentManager.Application.Command.UpdateCommand.UpdateDocumentCommand).Assembly));
 var connectionString = builder.Configuration.GetConnectionString("DocumentManagerStore");
-builder.Services.AddDbContext<DocumentManagerDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<DocumentManagerDbContext>(options => options.UseSqlServer(connectionString, dbContextBuilder => dbContextBuilder.MigrationsAssembly("Coderama.DocumentManager.Persistence")));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 

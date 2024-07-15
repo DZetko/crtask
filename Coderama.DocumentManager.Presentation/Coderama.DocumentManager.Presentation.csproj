@@ -18,5 +18,9 @@
     <ItemGroup>
       <ProjectReference Include="..\Coderama.DocumentManager.Application\Coderama.DocumentManager.Application.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Response\" />
+    </ItemGroup>
 
 </Project>
