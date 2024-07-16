@@ -43,9 +43,9 @@ public class DocumentController(ISender sender) : ControllerBase
     
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> Update([FromBody]UpdateDocumentRequest updateDocumentRequest)
+    public async Task<IActionResult> Update([FromRoute]Guid id, [FromBody]UpdateDocumentRequest updateDocumentRequest)
     {
-        var updateDocumentCommand = new UpdateDocumentCommand(updateDocumentRequest.Id, updateDocumentRequest.Tags, updateDocumentRequest.Data);
+        var updateDocumentCommand = new UpdateDocumentCommand(id, updateDocumentRequest.Tags, updateDocumentRequest.Data);
         await sender.Send(updateDocumentCommand);
         return NoContent();
     }

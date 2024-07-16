@@ -15,6 +15,7 @@ public class Document: BaseEntity, IEquatable<Document>
     
     public static Document Create(Guid id, List<Tag> tags, string data)
     {
+        // TODO: It might be benefitial to throw domain-specific exceptions from the domain layer
         ArgumentNullException.ThrowIfNull(id, nameof(id));
         ArgumentNullException.ThrowIfNull(tags, nameof(tags));
         ArgumentNullException.ThrowIfNull(data, nameof(data));
