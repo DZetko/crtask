@@ -13,7 +13,7 @@ public sealed class DocumentRepository(
     ILogger<DocumentRepository> logger)
     : IDocumentRepository
 {
-    public async Task<Document?> GetDocumentByIdASync(Guid id)
+    public async Task<Document?> GetDocumentByIdAsync(Guid id)
     {
         // Avoiding EF here to minimize the performance penalty of using an ORM
         // It must be evaluated, though, if the performance gains outweigh the lack of strong typing of the below

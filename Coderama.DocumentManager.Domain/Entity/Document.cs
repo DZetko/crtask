@@ -1,4 +1,5 @@
-﻿using Coderama.DocumentManager.Domain.Primitives;
+﻿using System.Text.Json;
+using Coderama.DocumentManager.Domain.Primitives;
 
 namespace Coderama.DocumentManager.Domain.Entity;
 
@@ -8,14 +9,25 @@ public class Document: BaseEntity, IEquatable<Document>
     private Document(){}
     private Document(
         Guid id,
-        dynamic data) : base(id)
+        string data) : base(id)
     {
         Data = data;
     }
     
+    public static Document Create(Guid id, List<Tag> tags, object data)
+    {
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
+        ArgumentNullException.ThrowIfNull(tags, nameof(tags));
+        ArgumentNullException.ThrowIfNull(data, nameof(data));
+        var serializedData = JsonSerializer.Serialize(data);
+        var document = new Document(id, serializedData);
+        document.UpdateTags(tags);
+
+        return document;
+    }
+    
     public static Document Create(Guid id, List<Tag> tags, string data)
     {
-        // TODO: It might be benefitial to throw domain-specific exceptions from the domain layer
         ArgumentNullException.ThrowIfNull(id, nameof(id));
         ArgumentNullException.ThrowIfNull(tags, nameof(tags));
         ArgumentNullException.ThrowIfNull(data, nameof(data));
@@ -25,10 +37,11 @@ public class Document: BaseEntity, IEquatable<Document>
         return document;
     }
     
-    public void UpdateData(
-        string data)
+    public void UpdateData(object data)
     {
-        Data = data;
+        ArgumentNullException.ThrowIfNull(data, nameof(data));
+        var serializedData = JsonSerializer.Serialize(data);
+        Data = serializedData;
     }
     
     public void UpdateTags(

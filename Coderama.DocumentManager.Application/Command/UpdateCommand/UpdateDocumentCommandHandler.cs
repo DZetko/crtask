@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Coderama.DocumentManager.Domain;
 using Coderama.DocumentManager.Domain.Entity;
 using Coderama.DocumentManager.Domain.Repository;
@@ -12,7 +13,7 @@ public class UpdateDocumentCommandHandler(IUnitOfWork unitOfWork, IDocumentRepos
         UpdateDocumentCommand request,
         CancellationToken cancellationToken)
     {
-        var existingDocument = await repository.GetDocumentByIdASync(request.Id);
+        var existingDocument = await repository.GetDocumentByIdAsync(request.Id);
         if (existingDocument == null)
         {
             throw new Exception($"No Document could be found with ID: {request.Id}");

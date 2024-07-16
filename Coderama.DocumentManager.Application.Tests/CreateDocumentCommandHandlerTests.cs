@@ -11,7 +11,7 @@ public class CreateDocumentCommandHandlerTests
     private readonly Mock<IDocumentRepository> _documentRepository = new();
 
     [Fact]
-    public async Task CreateDocumentCommand_Should_Throw_When_Data_Is_Empty()
+    public async Task Creating_Document_Should_Throw_When_Data_Is_Empty()
      {
         // Arrange
         var createDocumentCommand = new CreateDocumentCommand(

@@ -11,6 +11,6 @@ public class GetDocumentByIdQueryHandler(IDocumentRepository repository)
         GetDocumentByIdQuery request,
         CancellationToken cancellationToken)
     {
-        return await repository.GetDocumentByIdASync(request.Id);
+        return await repository.GetDocumentByIdAsync(request.Id);
     }
 }

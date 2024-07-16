@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Coderama.DocumentManager.Application.Command.CreateDocument;
 using Coderama.DocumentManager.Application.Command.UpdateCommand;
 using Coderama.DocumentManager.Application.Query.GetDocument;
@@ -12,7 +13,7 @@ namespace Coderama.DocumentManager.Presentation.Controller;
 public class DocumentController(ISender sender) : ControllerBase
 {
     [HttpGet("{id}")]
-    [ProducesResponseType<DocumentDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType<DocumentResponse>(StatusCodes.Status200OK)]
     public async Task<IActionResult> Get([FromRoute]Guid id)
     {
         var getDocumentByIdQuery = new GetDocumentByIdQuery(id);
@@ -22,7 +23,7 @@ public class DocumentController(ISender sender) : ControllerBase
             return NotFound($"Could not find a document with id {id}");
         }
         
-        var documentDto = new DocumentDto
+        var documentDto = new DocumentResponse
         {
             Id = document.Id,
             Tags = document.Tags.Select(t => t.Value).ToList(),
@@ -41,7 +42,7 @@ public class DocumentController(ISender sender) : ControllerBase
         return CreatedAtAction(nameof(Create), createDocumentCommand.Id);
     }
     
-    [HttpPut]
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Update([FromRoute]Guid id, [FromBody]UpdateDocumentRequest updateDocumentRequest)
     {

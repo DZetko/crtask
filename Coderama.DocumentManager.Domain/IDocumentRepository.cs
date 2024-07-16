@@ -4,7 +4,7 @@ namespace Coderama.DocumentManager.Domain;
 
 public interface IDocumentRepository
 {
-    Task<Document?> GetDocumentByIdASync(
+    Task<Document?> GetDocumentByIdAsync(
         Guid id);
     
     Task CreateDocumentAsync(
